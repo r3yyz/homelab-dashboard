@@ -65,4 +65,14 @@ function initKiosk() {
         localStorage.setItem(KEY, isKiosk);
         btn.setAttribute('title', isKiosk ? 'Quitter le mode tablette' : 'Mode tablette murale');
     });
+
+    // Sortir du kiosk avec la touche K
+    document.addEventListener('keydown', function(e) {
+    if (e.key === 'q' || e.key === 'Q') {
+        if (body.classList.contains('kiosk-mode')) {
+            body.classList.remove('kiosk-mode');
+            localStorage.setItem(KEY, 'false');
+        }
+    }
+    });
 }
