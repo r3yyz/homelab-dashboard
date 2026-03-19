@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard personnel HomeLab — supervision des services réseau">
+    <meta name="robots" content="noindex, nofollow">
+    <title>HomeLab Dashboard</title>
+
+    <!-- Feuilles de style — ordre important -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+
+    <!-- =============================================
+         EN-TÊTE : navigation + toggle thème
+    ============================================== -->
+    <header class="site-header" role="banner">
+        <nav class="nav" aria-label="Navigation principale">
+
+            <a href="/" class="logo" aria-label="Retour à l'accueil">
+                Home<span class="logo-accent">Lab</span>
+            </a>
+
+            <ul class="nav-links" role="list">
+                <li><a href="#dashboard"   class="nav-link">Dashboard</a></li>
+                <li><a href="#meteo"       class="nav-link">Météo</a></li>
+                <li><a href="#services"    class="nav-link">Services</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <!-- Toggle thème clair/sombre -->
+                <button
+                    id="theme-toggle"
+                    class="btn-icon"
+                    aria-label="Basculer le thème"
+                    title="Thème clair / sombre"
+                >
+                    <svg class="icon icon-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1"  x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22"  x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3"  y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/></svg>
+                    <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+
+                <!-- Mode tablette murale -->
+                <button
+                    id="kiosk-toggle"
+                    class="btn-icon"
+                    aria-label="Mode tablette murale"
+                    title="Mode tablette murale"
+                >
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </button>
+            </div>
+
+        </nav>
+    </header>
+
+    <!-- =============================================
+         CONTENU PRINCIPAL
+    ============================================== -->
+    <main id="dashboard" role="main">
+
+        <!-- --- Section héro : horloge + recherche --- -->
+        <section class="section-hero" aria-label="Horloge et recherche">
+
+            <div class="clock-wrapper">
+                <time id="clock" class="clock" aria-live="polite" aria-label="Heure actuelle">
+                    00:00:00
+                </time>
+                <p id="date-display" class="date-display" aria-live="polite"></p>
+            </div>
+
+            <div class="search-wrapper">
+                <form
+                    class="search-form"
+                    action="https://www.google.com/search"
+                    method="get"
+                    role="search"
+                    aria-label="Recherche web"
+                >
+                    <div class="search-input-wrapper">
+                        <label for="search-input" class="sr-only">Rechercher sur le web</label>
+                        <input
+                            id="search-input"
+                            class="search-input"
+                            type="search"
+                            name="q"
+                            placeholder="Rechercher sur le web…"
+                            autocomplete="off"
+                            autofocus
+                        >
+                        <button type="submit" class="search-btn" aria-label="Lancer la recherche">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+
+        <!-- --- Section météo --- -->
+        <section id="meteo" class="section-weather" aria-label="Météo locale" aria-live="polite">
+            <div id="weather-widget" class="weather-widget">
+                <p class="weather-loading">Chargement de la météo…</p>
+            </div>
+        </section>
+
+        <!-- --- Section services --- -->
+        <section id="services" class="section-services" aria-label="Services du HomeLab">
+
+            <h2 class="section-title sr-only">Services</h2>
+
+            <!--
+                Les cartes sont générées dynamiquement par js/services.js
+                à partir du tableau CONFIG.services dans config.js.
+                Aucune carte n'est écrite en dur ici.
+            -->
+            <div id="services-grid" class="services-grid" role="list">
+                <!-- Injecté par services.js -->
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- =============================================
+         PIED DE PAGE
+    ============================================== -->
+    <footer class="site-footer" role="contentinfo">
+        <p class="footer-text">
+            HomeLab Dashboard — usage personnel
+        </p>
+    </footer>
+
+    <!-- =============================================
+         SCRIPTS — ordre strict à respecter
+         1. config.js   : données (doit être en premier)
+         2. js/theme.js : thème avant le rendu (évite le flash)
+         3. js/clock.js, weather.js, services.js : modules
+         4. js/main.js  : orchestrateur (doit être en dernier)
+    ============================================== -->
+    <script src="config.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/clock.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
