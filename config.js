@@ -11,9 +11,24 @@ const CONFIG = {
         label: "Orléans",
     },
 
+    proxmox: {
+        host:     'https://192.168.20.212:8006',
+        node:     'pve',                    // ← nom du nœud visible dans l'interface Proxmox
+        tokenId:  'root@pam!dashboard',     // ← votre Token ID
+        token:    'VOTRE-TOKEN-ICI',        // ← le secret affiché une seule fois à la création
+    },
+
+    adguard: {
+        host:     'http://192.168.20.213',
+        user:     'admin',                  // ← identifiant AdGuard Home
+        password: 'VOTRE-MOT-DE-PASSE',    // ← mot de passe AdGuard Home
+    },
+
     refresh: {
         weather:  15 * 60 * 1000,
         services: 30 * 1000,
+        proxmox:  15 * 1000,
+        adguard:  60 * 1000,
     },
 
     services: [

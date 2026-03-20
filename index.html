@@ -126,6 +126,37 @@
 
         </section>
 
+        <!-- --- Section widgets système --- -->
+        <section id="systeme" class="section-system" aria-label="Supervision système">
+
+            <!-- Widget Proxmox -->
+            <div class="widget-card" aria-label="Proxmox">
+                <div class="widget-header">
+                    <span class="widget-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                        <span class="widget-title-accent">Proxmox</span> — Virtualisation
+                    </span>
+                </div>
+                <div id="proxmox-widget" aria-live="polite">
+                    <div class="pve-error">Chargement…</div>
+                </div>
+            </div>
+
+            <!-- Widget AdGuard -->
+            <div class="widget-card" aria-label="AdGuard Home">
+                <div class="widget-header">
+                    <span class="widget-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                        <span class="widget-title-accent">AdGuard</span> — DNS
+                    </span>
+                </div>
+                <div id="adguard-widget" aria-live="polite">
+                    <div class="pve-error">Chargement…</div>
+                </div>
+            </div>
+
+        </section>
+
     </main>
 
     <!-- =============================================
@@ -149,6 +180,8 @@
     <script src="js/clock.js"></script>
     <script src="js/weather.js"></script>
     <script src="js/services.js"></script>
+    <script src="js/proxmox.js"></script>
+    <script src="js/adguard.js"></script>
     <script src="js/main.js"></script>
 
 </body>

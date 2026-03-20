@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
     initClock();      /* clock.js    */
     initWeather();    /* weather.js  */
     initServices();   /* services.js */
+    initProxmox();    /* proxmox.js  */
+    initAdGuard();    /* adguard.js  */
     initKiosk();      /* theme.js    */
 
     console.info('[HomeLab] Dashboard initialisé avec', CONFIG.services.length, 'service(s).');

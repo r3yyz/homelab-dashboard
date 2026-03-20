@@ -388,3 +388,197 @@
 @media (max-width: 360px) {
     .services-grid { grid-template-columns: 1fr; }
 }
+
+/* -------------------------------------------------------
+   Section widgets système (Proxmox, AdGuard…)
+------------------------------------------------------- */
+.section-system {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+}
+
+@media (max-width: 800px) {
+    .section-system { grid-template-columns: 1fr; }
+}
+
+/* Widget générique */
+.widget-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-card);
+}
+
+.widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.widget-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.widget-title-accent { color: var(--color-accent); }
+
+/* --- Proxmox --- */
+.pve-section-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+    display: block;
+}
+
+.pve-node-card {
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.pve-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+}
+
+@media (max-width: 500px) {
+    .pve-metrics { grid-template-columns: 1fr; }
+}
+
+.pve-metric-label {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    margin-bottom: 6px;
+    letter-spacing: 0.06em;
+}
+
+.pve-metric-sub {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    margin-top: 4px;
+}
+
+.pve-guests-header {
+    margin-bottom: var(--space-sm);
+}
+
+.pve-guests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pve-guest-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px var(--space-sm);
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+}
+
+.pve-guest-row:hover {
+    background-color: var(--color-accent-dim);
+}
+
+.pve-guest-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pve-guest-icon {
+    flex-shrink: 0;
+    display: flex;
+}
+
+.pve-guest-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    font-family: var(--font-mono);
+}
+
+.pve-guest-id {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
+}
+
+.pve-guest-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.pve-guest-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pve-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: var(--space-xl);
+    color: var(--color-text-muted);
+    font-size: 13px;
+    text-align: center;
+    font-family: var(--font-mono);
+}
+
+/* --- AdGuard --- */
+.adg-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.adg-stat {
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm) var(--space-md);
+}
+
+.adg-blocked { border: 1px solid var(--color-accent-border); }
+
+.adg-val {
+    font-family: var(--font-mono);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+}
+
+.adg-blocked .adg-val { color: var(--color-accent); }
+
+.adg-label {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    margin-top: 2px;
+    letter-spacing: 0.04em;
+}

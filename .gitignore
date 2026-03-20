@@ -1,0 +1,17 @@
+# ============================================================
+#  .gitignore — Fichiers exclus du dépôt Git
+# ============================================================
+
+# Configuration sensible (IPs locales, coordonnées GPS)
+config.js
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Éditeurs
+.vscode/
+.idea/
