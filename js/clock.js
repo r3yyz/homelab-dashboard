@@ -1,34 +1,25 @@
-/* ============================================================
-   clock.js — Horloge en temps réel + date
-============================================================ */
+/* clock.js — Horloge temps réel + date */
 
-function updateClock() {
-    const now = new Date();
-
-    /* Horloge HH:MM:SS */
+window.initClock = function () {
     const clockEl = document.getElementById('clock');
-    if (clockEl) {
-        const h = String(now.getHours()).padStart(2, '0');
-        const m = String(now.getMinutes()).padStart(2, '0');
-        const s = String(now.getSeconds()).padStart(2, '0');
-        clockEl.textContent = `${h}:${m}:${s}`;
-        /* Mise à jour de l'attribut datetime pour l'accessibilité */
-        clockEl.setAttribute('datetime', now.toISOString());
+    const dateEl  = document.getElementById('date-display');
+
+    function tick() {
+        const now = new Date();
+        if (clockEl) {
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            const ss = String(now.getSeconds()).padStart(2, '0');
+            clockEl.textContent = `${hh}:${mm}:${ss}`;
+            clockEl.setAttribute('datetime', now.toISOString());
+        }
+        if (dateEl) {
+            dateEl.textContent = now.toLocaleDateString('fr-FR', {
+                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+            });
+        }
     }
 
-    /* Date en toutes lettres : "jeudi 19 mars 2026" */
-    const dateEl = document.getElementById('date-display');
-    if (dateEl) {
-        dateEl.textContent = now.toLocaleDateString('fr-FR', {
-            weekday: 'long',
-            day:     'numeric',
-            month:   'long',
-            year:    'numeric',
-        });
-    }
-}
-
-function initClock() {
-    updateClock();
-    setInterval(updateClock, 1000);
-}
+    tick();
+    setInterval(tick, 1000);
+};

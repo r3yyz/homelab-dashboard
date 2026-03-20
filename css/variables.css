@@ -1,92 +1,89 @@
-/* ============================================================
-   variables.css — Tokens de design
-   Thème : terminal de contrôle spatial
-============================================================ */
+/* variables.css — Design tokens. Aucun style ici, uniquement des variables. */
 
 [data-theme="dark"] {
-    --color-bg:          #060d0f;
-    --color-bg-surface:  #0a1419;
-    --color-bg-card:     #0d1c22;
-    --color-bg-elevated: #122530;
+    --bg:            #060d0f;
+    --bg-surface:    #0a1419;
+    --bg-card:       #0d1c22;
+    --bg-elevated:   #122530;
 
-    --color-text-primary:   #d4eae0;
-    --color-text-secondary: #6a9a82;
-    --color-text-muted:     #2e5244;
+    --text-1:        #d4eae0;
+    --text-2:        #6a9a82;
+    --text-3:        #2e5244;
 
-    --color-accent:        #00e5a0;
-    --color-accent-dim:    rgba(0, 229, 160, 0.08);
-    --color-accent-border: rgba(0, 229, 160, 0.3);
-    --color-accent-glow:   rgba(0, 229, 160, 0.15);
+    --accent:        #00e5a0;
+    --accent-dim:    rgba(0,229,160,0.08);
+    --accent-border: rgba(0,229,160,0.28);
 
-    --color-online:  #00e5a0;
-    --color-offline: #ff4d6d;
-    --color-pending: #2e5244;
+    --ok:     #00e5a0;
+    --warn:   #f59e0b;
+    --danger: #ff4d6d;
+    --muted:  #1e3a2f;
 
-    --color-border:       rgba(0, 229, 160, 0.08);
-    --color-border-hover: rgba(0, 229, 160, 0.22);
+    /* --border : utilisé pour les séparateurs internes fins */
+    --border:      rgba(0,229,160,0.07);
+    /* --card-border : utilisé pour les cartes et widgets — clairement visible */
+    --card-border: rgba(0,229,160,0.18);
 
-    --shadow-card:     0 0 0 1px rgba(0, 229, 160, 0.07), 0 4px 24px rgba(0,0,0,0.6);
-    --shadow-elevated: 0 0 0 1px rgba(0, 229, 160, 0.18), 0 8px 40px rgba(0,0,0,0.7);
+    --shadow-sm: 0 2px 12px rgba(0,0,0,0.5);
+    --shadow-md: 0 4px 24px rgba(0,0,0,0.6);
+    --shadow-lg: 0 0 0 1px rgba(0,229,160,0.2), 0 8px 40px rgba(0,0,0,0.7);
 
-    --scan-line: rgba(0, 229, 160, 0.018);
-
-    --icon-sun-opacity:  1;
-    --icon-moon-opacity: 0;
+    --scan: rgba(0,229,160,0.016);
+    --icon-sun:  1;
+    --icon-moon: 0;
 }
 
 [data-theme="light"] {
-    --color-bg:          #f4f7f5;
-    --color-bg-surface:  #ffffff;
-    --color-bg-card:     #ffffff;
-    --color-bg-elevated: #f0f5f2;
+    --bg:            #f0f5f2;
+    --bg-surface:    #ffffff;
+    --bg-card:       #ffffff;
+    --bg-elevated:   #f5f9f7;
 
-    --color-text-primary:   #0d2018;
-    --color-text-secondary: #3d6b55;
-    --color-text-muted:     #8ab49a;
+    --text-1:        #0d2018;
+    --text-2:        #3d6b55;
+    --text-3:        #8ab49a;
 
-    --color-accent:        #007a52;
-    --color-accent-dim:    rgba(0, 122, 82, 0.07);
-    --color-accent-border: rgba(0, 122, 82, 0.25);
-    --color-accent-glow:   rgba(0, 122, 82, 0.1);
+    --accent:        #007a52;
+    --accent-dim:    rgba(0,122,82,0.07);
+    --accent-border: rgba(0,122,82,0.25);
 
-    --color-online:  #007a52;
-    --color-offline: #d4163c;
-    --color-pending: #8ab49a;
+    --ok:     #007a52;
+    --warn:   #d97706;
+    --danger: #d4163c;
+    --muted:  #8ab49a;
 
-    --color-border:       rgba(0, 0, 0, 0.07);
-    --color-border-hover: rgba(0, 122, 82, 0.2);
+    --border:      rgba(0,0,0,0.07);
+    --card-border: rgba(0,0,0,0.12);
 
-    --shadow-card:     0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
-    --shadow-elevated: 0 4px 24px rgba(0,0,0,0.1);
+    --shadow-sm: 0 1px 4px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.04);
+    --shadow-md: 0 2px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 4px 24px rgba(0,0,0,0.1);
 
-    --scan-line: transparent;
-
-    --icon-sun-opacity:  0;
-    --icon-moon-opacity: 1;
+    --scan: transparent;
+    --icon-sun:  0;
+    --icon-moon: 1;
 }
 
 :root {
-    --font-ui:      'Segoe UI', system-ui, sans-serif;
-    --font-mono:    'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    --font:  'Segoe UI', system-ui, sans-serif;
+    --mono:  'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 
-    --space-xs:  4px;
-    --space-sm:  8px;
-    --space-md:  16px;
-    --space-lg:  24px;
-    --space-xl:  40px;
-    --space-2xl: 72px;
+    --r-sm:   6px;
+    --r-md:   12px;
+    --r-lg:   18px;
+    --r-pill: 999px;
 
-    --radius-sm:   6px;
-    --radius-md:   12px;
-    --radius-lg:   18px;
-    --radius-xl:   24px;
-    --radius-pill: 999px;
+    --t-fast:   120ms ease;
+    --t-normal: 240ms ease;
+    --t-slow:   380ms cubic-bezier(0.4,0,0.2,1);
 
-    --transition-fast:   120ms ease;
-    --transition-normal: 220ms ease;
-    --transition-slow:   380ms cubic-bezier(0.4, 0, 0.2, 1);
+    --nav-h:  56px;
+    --max-w:  1280px;
+    --pad:    clamp(16px, 5vw, 56px);
 
-    --nav-height:      56px;
-    --content-max-w:   1200px;
-    --content-padding: clamp(16px, 5vw, 60px);
+    --gap-sm:  8px;
+    --gap-md:  16px;
+    --gap-lg:  24px;
+    --gap-xl:  40px;
+    --gap-2xl: 72px;
 }

@@ -1,74 +1,69 @@
-/* ============================================================
-   adguard.js — Widget AdGuard Home : stats de blocage
-   Prérequis : CONFIG.adguard défini dans config.js
-============================================================ */
+/* adguard.js — Widget AdGuard Home. Dépend de ICONS. */
 
-function fmtNumber(n) {
-    if (!n && n !== 0) return '—';
-    if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
-    if (n >= 1000)    return (n / 1000).toFixed(1) + 'k';
+function adgFmt(n) {
+    if (n == null) return '—';
+    if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k';
     return String(n);
 }
 
-async function renderAdGuard() {
+window.initAdGuard = function () {
+    if (!CONFIG.adguard?.enabled) return;
+
     const container = document.getElementById('adguard-widget');
     if (!container) return;
 
-    if (typeof CONFIG.adguard === 'undefined') {
-        container.innerHTML = `<div class="pve-error">AdGuard non configuré dans config.js</div>`;
-        return;
-    }
+    async function render() {
+        try {
+            const { host, user, password } = CONFIG.adguard;
+            const res = await fetch(`${host}/control/stats`, {
+                headers: { Authorization: `Basic ${btoa(`${user}:${password}`)}` },
+                signal: AbortSignal.timeout(6000),
+            });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const d = await res.json();
 
-    try {
-        const { host, user, password } = CONFIG.adguard;
-        const credentials = btoa(`${user}:${password}`);
+            const total  = d.num_dns_queries || 0;
+            const blocked = d.num_blocked_filtering || 0;
+            const pct    = total ? Math.round(blocked / total * 100) : 0;
+            const ms     = d.avg_processing_time ? (d.avg_processing_time * 1000).toFixed(1) : '—';
 
-        const res = await fetch(`${host}/control/stats`, {
-            headers: { 'Authorization': `Basic ${credentials}` },
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
+            container.innerHTML = `
+                <div class="adg-stats">
+                    <div class="adg-stat">
+                        <div class="adg-val">${adgFmt(total)}</div>
+                        <div class="adg-lbl">requêtes aujourd'hui</div>
+                    </div>
+                    <div class="adg-stat highlight">
+                        <div class="adg-val">${adgFmt(blocked)}</div>
+                        <div class="adg-lbl">bloquées (${pct}%)</div>
+                    </div>
+                    <div class="adg-stat">
+                        <div class="adg-val">${adgFmt(d.num_replaced_safebrowsing)}</div>
+                        <div class="adg-lbl">malwares bloqués</div>
+                    </div>
+                    <div class="adg-stat">
+                        <div class="adg-val">${ms} <span style="font-size:0.75rem;font-weight:400;">ms</span></div>
+                        <div class="adg-lbl">temps moyen</div>
+                    </div>
+                </div>
+                <div class="adg-bar-row">
+                    <span class="adg-bar-lbl">Taux de blocage</span>
+                    <span class="adg-bar-pct">${pct}%</span>
+                </div>
+                <div class="bar-bg" style="width:100%;">
+                    <div class="bar-fill ok" style="width:${pct}%;"></div>
+                </div>`;
 
-        const blockPct = data.num_dns_queries
-            ? Math.round((data.num_blocked_filtering / data.num_dns_queries) * 100)
-            : 0;
-
-        container.innerHTML = `
-            <div class="adg-grid">
-                <div class="adg-stat">
-                    <div class="adg-val">${fmtNumber(data.num_dns_queries)}</div>
-                    <div class="adg-label">requêtes aujourd'hui</div>
-                </div>
-                <div class="adg-stat adg-blocked">
-                    <div class="adg-val">${fmtNumber(data.num_blocked_filtering)}</div>
-                    <div class="adg-label">bloquées (${blockPct}%)</div>
-                </div>
-                <div class="adg-stat">
-                    <div class="adg-val">${fmtNumber(data.num_replaced_safebrowsing)}</div>
-                    <div class="adg-label">malwares bloqués</div>
-                </div>
-                <div class="adg-stat">
-                    <div class="adg-val">${fmtNumber(data.avg_processing_time ? (data.avg_processing_time * 1000).toFixed(1) : null)} <span style="font-size:11px;">ms</span></div>
-                    <div class="adg-label">temps moyen</div>
-                </div>
-            </div>
-            <div style="margin-top:10px;">
-                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-                    <span style="font-size:11px;color:var(--color-text-muted);">Taux de blocage</span>
-                    <span style="font-size:11px;font-family:var(--font-mono);color:var(--color-accent);">${blockPct}%</span>
-                </div>
-                <div style="height:5px;background:var(--color-border);border-radius:99px;overflow:hidden;">
-                    <div style="width:${blockPct}%;height:100%;background:var(--color-accent);border-radius:99px;transition:width .6s ease;"></div>
-                </div>
+        } catch (err) {
+            container.innerHTML = `<div class="widget-state">
+                ${ICONS.get('info', 20)} AdGuard inaccessible<br>
+                <span style="font-size:0.72rem;">${err.message}</span>
             </div>`;
-
-    } catch (err) {
-        container.innerHTML = `<div class="pve-error">AdGuard inaccessible — ${err.message}</div>`;
-        console.warn('[adguard.js]', err);
+            console.warn('[adguard]', err.message);
+        }
     }
-}
 
-function initAdGuard() {
-    renderAdGuard();
-    setInterval(renderAdGuard, CONFIG.refresh?.adguard || 60000);
-}
+    render();
+    setInterval(render, CONFIG.refresh.adguard);
+};

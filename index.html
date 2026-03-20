@@ -3,179 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dashboard personnel HomeLab — supervision des services réseau">
+    <meta name="description" content="HomeLab Dashboard — supervision des services réseau">
     <meta name="robots" content="noindex, nofollow">
-    <title>HomeLab Dashboard</title>
+    <title>HomeLab</title>
 
-    <!-- Feuilles de style — ordre important -->
+    <!-- Favicon SVG inline — pas de fichier externe nécessaire -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%23060d0f'/><path d='M12 3L4 7v5c0 4.4 3.4 8.5 8 9.9 4.6-1.4 8-5.5 8-9.9V7z' fill='none' stroke='%2300e5a0' stroke-width='1.5'/></svg>">
+
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
 
-    <!-- =============================================
-         EN-TÊTE : navigation + toggle thème
-    ============================================== -->
     <header class="site-header" role="banner">
         <nav class="nav" aria-label="Navigation principale">
-
-            <a href="/" class="logo" aria-label="Retour à l'accueil">
-                Home<span class="logo-accent">Lab</span>
-            </a>
-
+            <a href="/" class="logo" aria-label="Accueil">Home<span class="logo-accent">Lab</span></a>
             <ul class="nav-links" role="list">
-                <li><a href="#dashboard"   class="nav-link">Dashboard</a></li>
-                <li><a href="#meteo"       class="nav-link">Météo</a></li>
-                <li><a href="#services"    class="nav-link">Services</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#systeme"  class="nav-link">Système</a></li>
+                <li><a href="#meteo"    class="nav-link">Météo</a></li>
             </ul>
-
             <div class="nav-actions">
-                <!-- Toggle thème clair/sombre -->
-                <button
-                    id="theme-toggle"
-                    class="btn-icon"
-                    aria-label="Basculer le thème"
-                    title="Thème clair / sombre"
-                >
-                    <svg class="icon icon-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1"  x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22"  x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3"  y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/></svg>
+                <button id="theme-toggle" class="btn-icon" aria-label="Thème clair / sombre" title="Thème (T)">
+                    <svg class="icon icon-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                     <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                 </button>
-
-                <!-- Mode tablette murale -->
-                <button
-                    id="kiosk-toggle"
-                    class="btn-icon"
-                    aria-label="Mode tablette murale"
-                    title="Mode tablette murale"
-                >
+                <button id="kiosk-toggle" class="btn-icon" aria-label="Mode tablette murale" title="Mode kiosk (K)">
                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                 </button>
             </div>
-
         </nav>
     </header>
 
-    <!-- =============================================
-         CONTENU PRINCIPAL
-    ============================================== -->
     <main id="dashboard" role="main">
 
-        <!-- --- Section héro : horloge + recherche --- -->
+        <!-- Héro : horloge + recherche -->
         <section class="section-hero" aria-label="Horloge et recherche">
-
             <div class="clock-wrapper">
-                <time id="clock" class="clock" aria-live="polite" aria-label="Heure actuelle">
-                    00:00:00
-                </time>
+                <time id="clock" class="clock" aria-live="polite" aria-label="Heure actuelle">00:00:00</time>
                 <p id="date-display" class="date-display" aria-live="polite"></p>
             </div>
-
             <div class="search-wrapper">
-                <form
-                    class="search-form"
-                    action="https://www.google.com/search"
-                    method="get"
-                    role="search"
-                    aria-label="Recherche web"
-                >
+                <form action="https://www.google.com/search" method="get" role="search" aria-label="Recherche web">
                     <div class="search-input-wrapper">
-                        <label for="search-input" class="sr-only">Rechercher sur le web</label>
-                        <input
-                            id="search-input"
-                            class="search-input"
-                            type="search"
-                            name="q"
-                            placeholder="Rechercher sur le web…"
-                            autocomplete="off"
-                            autofocus
-                        >
-                        <button type="submit" class="search-btn" aria-label="Lancer la recherche">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <circle cx="11" cy="11" r="8"/>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                            </svg>
+                        <label for="q" class="sr-only">Rechercher sur le web</label>
+                        <input id="q" class="search-input" type="search" name="q"
+                            placeholder="Rechercher sur le web…" autocomplete="off" autofocus>
+                        <button type="submit" class="search-btn" aria-label="Rechercher">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         </button>
                     </div>
                 </form>
             </div>
-
         </section>
 
-        <!-- --- Section météo --- -->
-        <section id="meteo" class="section-weather" aria-label="Météo locale" aria-live="polite">
-            <div id="weather-widget" class="weather-widget">
-                <p class="weather-loading">Chargement de la météo…</p>
-            </div>
+        <!-- Services réseau -->
+        <section id="services" aria-label="Services du HomeLab">
+            <div id="services-grid" class="services-grid" role="list"></div>
         </section>
 
-        <!-- --- Section services --- -->
-        <section id="services" class="section-services" aria-label="Services du HomeLab">
-
-            <h2 class="section-title sr-only">Services</h2>
-
-            <!--
-                Les cartes sont générées dynamiquement par js/services.js
-                à partir du tableau CONFIG.services dans config.js.
-                Aucune carte n'est écrite en dur ici.
-            -->
-            <div id="services-grid" class="services-grid" role="list">
-                <!-- Injecté par services.js -->
-            </div>
-
-        </section>
-
-        <!-- --- Section widgets système --- -->
+        <!-- Widgets système : Proxmox + AdGuard -->
         <section id="systeme" class="section-system" aria-label="Supervision système">
 
-            <!-- Widget Proxmox -->
-            <div class="widget-card" aria-label="Proxmox">
-                <div class="widget-header">
+            <div class="widget" aria-label="Proxmox">
+                <div class="widget-head">
                     <span class="widget-title">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-                        <span class="widget-title-accent">Proxmox</span> — Virtualisation
+                        <span class="widget-title-accent">Proxmox</span>&ensp;virtualisation
                     </span>
                 </div>
-                <div id="proxmox-widget" aria-live="polite">
-                    <div class="pve-error">Chargement…</div>
+                <div class="widget-body" id="proxmox-widget">
+                    <div class="widget-state">Chargement…</div>
                 </div>
             </div>
 
-            <!-- Widget AdGuard -->
-            <div class="widget-card" aria-label="AdGuard Home">
-                <div class="widget-header">
+            <div class="widget" aria-label="AdGuard Home">
+                <div class="widget-head">
                     <span class="widget-title">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-                        <span class="widget-title-accent">AdGuard</span> — DNS
+                        <span class="widget-title-accent">AdGuard</span>&ensp;DNS
                     </span>
                 </div>
-                <div id="adguard-widget" aria-live="polite">
-                    <div class="pve-error">Chargement…</div>
+                <div class="widget-body" id="adguard-widget">
+                    <div class="widget-state">Chargement…</div>
                 </div>
             </div>
 
+        </section>
+
+        <!-- Météo -->
+        <section id="meteo" class="section-weather" aria-label="Météo locale" aria-live="polite">
+            <div id="weather-widget" class="weather-pill">
+                <span class="w-desc" style="color:var(--text-3)">Chargement…</span>
+            </div>
         </section>
 
     </main>
 
-    <!-- =============================================
-         PIED DE PAGE
-    ============================================== -->
     <footer class="site-footer" role="contentinfo">
-        <p class="footer-text">
-            ▸ HOMELAB.SYS — connexion locale — usage personnel
-        </p>
+        ▸ HOMELAB.SYS — connexion locale — usage personnel
     </footer>
 
-    <!-- =============================================
-         SCRIPTS — ordre strict à respecter
-         1. config.js   : données (doit être en premier)
-         2. js/theme.js : thème avant le rendu (évite le flash)
-         3. js/clock.js, weather.js, services.js : modules
-         4. js/main.js  : orchestrateur (doit être en dernier)
-    ============================================== -->
+    <!--
+        Ordre de chargement strict :
+        1. config.js  — données (global CONFIG)
+        2. icons.js   — bibliothèque SVG (global ICONS)
+        3. theme.js   — thème avant le premier pixel
+        4. modules    — clock, weather, services, proxmox, adguard
+        5. main.js    — orchestrateur (en dernier)
+    -->
     <script src="config.js"></script>
+    <script src="js/icons.js"></script>
     <script src="js/theme.js"></script>
     <script src="js/clock.js"></script>
     <script src="js/weather.js"></script>

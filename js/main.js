@@ -1,24 +1,32 @@
-/* ============================================================
-   main.js — Point d'entrée principal
-   Orchestre l'initialisation de tous les modules.
-   Ce fichier est chargé EN DERNIER dans index.html.
-============================================================ */
+/* main.js — Orchestrateur. Chargé en dernier. */
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    /* Vérification de sécurité : CONFIG doit être chargé */
     if (typeof CONFIG === 'undefined') {
-        console.error('[main.js] config.js est introuvable ou mal chargé.');
+        console.error('[main] config.js manquant ou mal chargé.');
+        document.body.innerHTML = `<div style="display:flex;height:100vh;align-items:center;justify-content:center;font-family:monospace;color:#ff4d6d;">
+            ▸ ERREUR : config.js introuvable. Vérifiez votre installation.</div>`;
         return;
     }
 
-    /* --- Initialisation des modules --- */
-    initClock();      /* clock.js    */
-    initWeather();    /* weather.js  */
-    initServices();   /* services.js */
-    initProxmox();    /* proxmox.js  */
-    initAdGuard();    /* adguard.js  */
-    initKiosk();      /* theme.js    */
+    /* Grille système : ajouter les classes de layout dynamiquement */
+    const sysSection = document.getElementById('systeme');
+    if (sysSection) {
+        if (CONFIG.proxmox?.enabled) sysSection.classList.add('has-proxmox');
+        if (CONFIG.adguard?.enabled) sysSection.classList.add('has-adguard');
+        /* Masquer la section si aucun widget n'est activé */
+        if (!CONFIG.proxmox?.enabled && !CONFIG.adguard?.enabled) {
+            sysSection.style.display = 'none';
+        }
+    }
 
-    console.info('[HomeLab] Dashboard initialisé avec', CONFIG.services.length, 'service(s).');
+    /* Initialisation des modules */
+    initTheme();    /* theme.js   */
+    initClock();    /* clock.js   */
+    initWeather();  /* weather.js */
+    initServices(); /* services.js */
+    initProxmox();  /* proxmox.js  */
+    initAdGuard();  /* adguard.js  */
+
+    console.info(`[HomeLab] ${CONFIG.services.length} service(s) · Proxmox: ${CONFIG.proxmox?.enabled ? 'on' : 'off'} · AdGuard: ${CONFIG.adguard?.enabled ? 'on' : 'off'}`);
 });
